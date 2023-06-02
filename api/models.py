@@ -45,5 +45,5 @@ class Leetcode(models.Model):
     # The primary_key argument is set to None to prevent Django from creating an `id` field.
     primary_key = None
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
