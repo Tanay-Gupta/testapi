@@ -16,11 +16,8 @@ class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
         model=Employee
         fields='__all__'
 
-class LeetcodeSerializer(serializers.HyperlinkedModelSerializer):
-
-    id=serializers.ReadOnlyField()
+class LeetcodeSerializer(serializers.ModelSerializer):
     class Meta:
         model=Leetcode
         fields='__all__'
-
         

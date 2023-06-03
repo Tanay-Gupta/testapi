@@ -34,6 +34,7 @@ class Employee(models.Model):
 
 #leetcode model here
 class Leetcode(models.Model):
+    
     name = models.CharField(max_length=500)
     url = models.URLField()
     duration = models.IntegerField()

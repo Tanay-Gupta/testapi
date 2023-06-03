@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
+    "django_cron",
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     ],
 #     'DEFAULT_RENDERER_CLASSES':('rest_framework.renderers.JSONRenderer',)
 # }
+
+
+CRON_CLASSES = [
+    "api.clock.MyCronJob",
+    # ...
+]

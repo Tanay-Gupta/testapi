@@ -16,7 +16,5 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 
 class LeetcodeViewSet(viewsets.ModelViewSet):
-    Leetcode.objects.all().delete()
-    LeetCodeService().update_contests()
     queryset=Leetcode.objects.all()
     serializer_class=LeetcodeSerializer 
