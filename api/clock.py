@@ -1,16 +1,30 @@
-from api.models import Leetcode
+from api.models import Leetcode,Company
+from api.services.code_chef_service import CodeChefService
 from api.services.leet_code_service import LeetCodeService
 from django_cron import CronJobBase, Schedule
+import random
+
+# def my_scheduled_job():
+#   LeetCodeService().update_contests()
+#   num=random.randint(0,100)
+#   data=Company(name=num,
+#         location=num+10,
+#          about=num-10,
+#         active=False)
+#   data.save()
 
 class MyCronJob(CronJobBase):
-    RUN_EVERY_MINS = 2 # every 2 hours
+    RUN_EVERY_MINS = 1 # every 2 hours
+    ALLOW_PARALLEL_RUNS = True
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'api.my_cron_job'    # a unique code
 
     def do(self):
-        #Leetcode.objects.all().delete()
-        LeetCodeService().update_contests()
+       LeetCodeService().update_contests()
+       CodeChefService().update_contests()
+
+        
 
 
 
