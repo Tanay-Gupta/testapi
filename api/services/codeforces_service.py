@@ -1,4 +1,5 @@
-from site_service import SiteService
+from api.models import Codeforces
+from api.services.site_service import SiteService
 from datetime import datetime
 import time
 from pytz import timezone
@@ -22,7 +23,17 @@ class CodeforcesService(SiteService):
             #print(contest)
             if contest['phase']=="BEFORE" or contest['phase']=="CODING":
                 contest_info=CodeforcesService().extract_contest_info(contest)
-                print(contest_info)
+                data=Codeforces(name=contest_info["name"],
+                              url =contest_info["url"],
+                              duration = contest_info["duration"],
+                              start_time =contest_info["start_time"],
+                               end_time =contest_info["end_time"],
+                              status =contest_info["status"],
+                              in_24_hours =contest_info["in_24_hours"]
+
+
+                              )
+                data.save()
 
     def unixToUtc(self,unixTimeStamp) -> str:
         #time_stamp = 1668306600 (unix time stamp) example
@@ -42,7 +53,7 @@ class CodeforcesService(SiteService):
         if (bool(contest['startTimeSeconds']) == False):
             contest_info["start_time"] = '-'
             contest_info["end_time"] = '-'
-            in_24_hours = 'No'
+            in_24_hours = False
         else:
             contest_info["start_time"] = CodeforcesService().unixToUtc(contest['startTimeSeconds'])
             contest_info["end_time"] = CodeforcesService().unixToUtc(contest['startTimeSeconds']+contest_info["duration"])
@@ -52,6 +63,7 @@ class CodeforcesService(SiteService):
 
 
     def update_contests(self):
+        Codeforces.objects.all().delete()
         #1.get the html
         response=CodeforcesService().make_request(CONTESTS_URL)
 
@@ -66,7 +78,7 @@ class CodeforcesService(SiteService):
         #     print(i)
         #print(contests)    
 
-CodeforcesService().update_contests()    
+# CodeforcesService().update_contests()    
 
 
 

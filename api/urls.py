@@ -16,12 +16,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from api.views import CodeChefViewSet,LeetcodeViewSet
+from api.views import *
 from rest_framework import routers
 
 router=routers.DefaultRouter()
+
+router.register(r'codingplatforms',CodingPlatformViewSet)
+router.register(r'allcontests',AllContestsViewSet)
+
 router.register(r'leetcode',LeetcodeViewSet)
 router.register(r'codechef',CodeChefViewSet)
+router.register(r'codeforces',CodeforcesViewSet)
+
+router.register(r'hackerrank',HackerRankViewSet)
+router.register(r'hackerearth',HackerEarthViewSet)
+router.register(r'csacademy',CSAcademyViewSet)
+router.register(r'atcoder',AtCoderViewSet)
+router.register(r'topcoder',TopCoderViewSet)
+router.register(r'codeforcesgym',CodeForcesGymViewSet)
+router.register(r'geekforgeeks',GeekforgeeksViewSet)
+router.register(r'codingninjas',CodingNinjasViewSet)
+
+
+
+
+
 urlpatterns = [
     path('',include(router.urls))
 ]
