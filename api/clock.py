@@ -1,6 +1,8 @@
 from api.models import Leetcode
+from api.services.at_coder_service import AtCoderService
 from api.services.code_chef_service import CodeChefService
 from api.services.codeforces_service import CodeforcesService
+from api.services.hacker_rank_service import HackerRankService
 from api.services.leet_code_service import LeetCodeService
 from django_cron import CronJobBase, Schedule
 import random
@@ -25,6 +27,12 @@ class MyCronJob(CronJobBase):
        LeetCodeService().update_contests()
        CodeChefService().update_contests()
        CodeforcesService().update_contests()
+       AtCoderService().update_contests()
+       HackerRankService().update_contests()   
+       
+
+
+
 
 
 

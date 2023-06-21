@@ -1,9 +1,9 @@
-from site_service import SiteService
-from datetime import datetime
-import time
+from api.models import AtCoder
+from api.services.site_service import SiteService
+from datetime import datetime,timedelta
+import pytz
 from pytz import timezone
 from json import dumps
-import dateutil
 from bs4 import BeautifulSoup
 
 UTC_FORMAT = "%Y-%m-%d %H:%M:%S:%f"
@@ -27,14 +27,26 @@ class AtCoderService(SiteService):
             tables.pop()
             tables.pop()
 
-        return (tables)#upcoming and present ka list bhej diya
+        return (tables)#upcoming and present
 
     def create_contests(self,tables):
         for table in tables: # ek ek table pe aa rhe
             contests=table.find("tbody").findAll("tr")
             for contest in contests:
                 contest_info = AtCoderService.extract_contest_info(contest)
-                print(contest_info)
+                data=AtCoder(name=contest_info["name"],
+                              url =contest_info["url"],
+                              duration = contest_info["duration"],
+                              start_time =contest_info["start_time"],
+                               end_time =contest_info["end_time"],
+                              status =contest_info["status"],
+                              in_24_hours =contest_info["in_24_hours"]
+
+
+                              )
+                data.save()
+
+                
         
            
           
@@ -55,27 +67,21 @@ class AtCoderService(SiteService):
         # print(hours,minutes)#sample output 216 00
         contest_info["duration"] = int(hours) * SECONDS_IN_HOUR + int(minutes) * SECONDS_IN_MINUTE
         contest_info["rated_range"] = tds[3].text
-
-        # _________________________________Items to be fixed (START)__________________________________________
-
-        # start_time =tds[0].a.time.text #JST timezone
-        # end_time = start_time + contest_info["duration"]
-
-        # contest_info[:start_time] = start_time.strftime UTC_FORMAT
-        # contest_info[:end_time] = end_time.strftime UTC_FORMAT 
-        #contest_info["status"] =AtCoderService().get_status(contest_info["start_time"])
-        # contest_info["in_24_hours"] =AtCoderService().in_24_hours(contest_info["start_time"],contest_info["status"])
-
-       # _________________________________Items to be fixed (END)__________________________________________
-       
-
-
-
         
+        dt =f"{tds[0].a.time.text} JST"
+        start_time=datetime.strptime(dt[:-9], '%Y-%m-%d %H:%M:%S').astimezone(pytz.utc)
+        contest_info['start_time'] = start_time.strftime('%Y-%m-%d %H:%M:%S:%f')
+
+
+        end_time = start_time + timedelta(seconds=contest_info["duration"])
+        contest_info['end_time'] = end_time.strftime('%Y-%m-%d %H:%M:%S:%f')
+        contest_info["status"] =AtCoderService().get_status(contest_info["start_time"])
+        contest_info["in_24_hours"] =AtCoderService().in_24_hours(contest_info["start_time"],contest_info["status"])
         return contest_info      
 
 
     def update_contests(self):
+        AtCoder.objects.all().delete()
         #1.get the html
         response=AtCoderService().make_request(CONTESTS_URL)
 
@@ -92,4 +98,4 @@ class AtCoderService(SiteService):
         #     print(i)
         #print(contests)    
 
-AtCoderService().update_contests()      
+# AtCoderService().update_contests()      
