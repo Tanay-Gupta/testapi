@@ -7,7 +7,7 @@ from api.serializers import *
 
 
 class LeetcodeViewSet(viewsets.ModelViewSet):
-    queryset=Leetcode.objects.all()
+    queryset=Leetcode.objects.all().exclude('id')
     serializer_class=LeetcodeSerializer 
 
 class CodeChefViewSet(viewsets.ModelViewSet):
