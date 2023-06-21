@@ -5,7 +5,7 @@ from api.models import *
 class LeetcodeSerializer(serializers.ModelSerializer):
     class Meta:
         model=Leetcode
-        fields='__all__'
+        fields = ['name', 'url', 'duration', 'start_time', 'end_time', 'status', 'in_24_hours']
 
 class CodeChefSerializer(serializers.ModelSerializer):
     class Meta:
