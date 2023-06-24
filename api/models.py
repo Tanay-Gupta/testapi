@@ -112,15 +112,19 @@ class HackerEarth(models.Model):
     url = models.URLField()
     duration = models.IntegerField()
     start_time = models.CharField(max_length=50)
+    type=models.TextField(default='contest')
     end_time = models.CharField(max_length=50)
     status = models.CharField(max_length=255)
     in_24_hours = models.BooleanField()
+    
     
     # The primary_key argument is set to None to prevent Django from creating an `id` field.
     primary_key = None
 
     def __str__(self):
         return self.name
+    def __str__(self):
+        return self.contest_type
 
 
 #---------------------------------------------------------------CSAcademy model here------------------------------------------------------------
