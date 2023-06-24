@@ -1,4 +1,5 @@
-from site_service import SiteService
+from api.models import CodeForcesGym
+from api.services.site_service import SiteService
 from datetime import datetime
 import time
 from pytz import timezone
@@ -19,9 +20,20 @@ class CodeforcesGymService(SiteService):
     def create_contests(self,contests):
         for contest in contests:
             #print(contest)
-            if contest['phase']=="BEFORE" or contest['phase']=="CODING"or contest['phase']=="FINISHED":
+            # or contest['phase']=="FINISHED"
+            if contest['phase']=="BEFORE" or contest['phase']=="CODING":
                 contest_info=CodeforcesGymService().extract_contest_info(contest)
-                print(contest_info)
+                data=CodeForcesGym(name=contest_info["name"],
+                              url =contest_info["url"],
+                              duration = contest_info["duration"],
+                              start_time =contest_info["start_time"],
+                               end_time =contest_info["end_time"],
+                              status =contest_info["status"],
+                              in_24_hours =contest_info["in_24_hours"]
+
+
+                              )
+                data.save()
 
     def unixToUtc(self,unixTimeStamp) -> str:
         #time_stamp = 1668306600 (unix time stamp) example
@@ -58,6 +70,7 @@ class CodeforcesGymService(SiteService):
 
 
     def update_contests(self):
+        CodeForcesGym.objects.all().delete()
         #1.get the html
         response=CodeforcesGymService().make_request(CONTESTS_URL)
 
@@ -72,7 +85,7 @@ class CodeforcesGymService(SiteService):
         #     print(i)
         #print(contests)    
 
-CodeforcesGymService().update_contests()    
+# CodeforcesGymService().update_contests()    
 
 
 

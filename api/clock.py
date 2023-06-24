@@ -1,6 +1,7 @@
 from api.models import Leetcode
 from api.services.at_coder_service import AtCoderService
 from api.services.code_chef_service import CodeChefService
+from api.services.codeforces_gym_service import CodeforcesGymService
 from api.services.codeforces_service import CodeforcesService
 from api.services.hacker_earth_service import HackerEarthService
 from api.services.hacker_rank_service import HackerRankService
@@ -10,14 +11,6 @@ import random
 
 from api.services.top_coder_service import TopCoderService
 
-# def my_scheduled_job():
-#   LeetCodeService().update_contests()
-#   num=random.randint(0,100)
-#   data=Company(name=num,
-#         location=num+10,
-#          about=num-10,
-#         active=False)
-#   data.save()
 
 class MyCronJob(CronJobBase):
     RUN_EVERY_MINS = 1 # every 2 hours
@@ -29,6 +22,7 @@ class MyCronJob(CronJobBase):
     def do(self):
        LeetCodeService().update_contests()
        CodeChefService().update_contests()
+       CodeforcesGymService().update_contests()  
        CodeforcesService().update_contests()
        AtCoderService().update_contests()
        HackerRankService().update_contests() 
