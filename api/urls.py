@@ -21,21 +21,21 @@ from rest_framework import routers
 
 router=routers.DefaultRouter()
 
-router.register(r'codingplatforms',CodingPlatformViewSet)
-router.register(r'allcontests',AllContestsViewSet)
+router.register(r'api/v1/codingplatforms',CodingPlatformViewSet)
+router.register(r'api/v1/allcontests',AllContestsViewSet)
 
-router.register(r'leetcode',LeetcodeViewSet)
-router.register(r'codechef',CodeChefViewSet)
-router.register(r'codeforces',CodeforcesViewSet)
+router.register(r'api/v1/leetcode',LeetcodeViewSet)
+router.register(r'api/v1/codechef',CodeChefViewSet)
+router.register(r'api/v1/codeforces',CodeforcesViewSet)
 
-router.register(r'hackerrank',HackerRankViewSet)
-router.register(r'hackerearth',HackerEarthViewSet)
-router.register(r'csacademy',CSAcademyViewSet)
-router.register(r'atcoder',AtCoderViewSet)
-router.register(r'topcoder',TopCoderViewSet)
-router.register(r'codeforcesgym',CodeForcesGymViewSet)
-router.register(r'geekforgeeks',GeekforgeeksViewSet)
-router.register(r'codingninjas',CodingNinjasViewSet)
+router.register(r'api/v1/hackerrank',HackerRankViewSet)
+router.register(r'api/v1/hackerearth',HackerEarthViewSet)
+router.register(r'api/v1/csacademy',CSAcademyViewSet)
+router.register(r'api/v1/atcoder',AtCoderViewSet)
+router.register(r'api/v1/topcoder',TopCoderViewSet)
+router.register(r'api/v1/codeforcesgym',CodeForcesGymViewSet)
+router.register(r'api/v1/geekforgeeks',GeekforgeeksViewSet)
+router.register(r'api/v1/codingninjas',CodingNinjasViewSet)
 
 
 
