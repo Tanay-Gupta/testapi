@@ -1,4 +1,4 @@
-from api.services.all_service import AllServices
+# from api.services.all_service import AllServices
 from api.services.at_coder_service import AtCoderService
 from api.services.code_chef_service import CodeChefService
 from api.services.codeforces_gym_service import CodeforcesGymService
@@ -18,18 +18,18 @@ class MyCronJob(CronJobBase):
     ALLOW_PARALLEL_RUNS = True
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'api.my_cron_job'    # a unique code
+    code = 'api.my_cron_job2'    # a unique code
 
     def do(self):
-    #    LeetCodeService().update_contests()
-    #    CodeChefService().update_contests()
-    #    CodeforcesGymService().update_contests()  
-    #    CodeforcesService().update_contests()
-    #    AtCoderService().update_contests()
-    #    HackerRankService().update_contests() 
-    #    TopCoderService().update_contests()      
-    #    HackerEarthService().update_contests()
-       AllServices().copy_data()
+       LeetCodeService().update_contests()
+       CodeChefService().update_contests()
+       CodeforcesGymService().update_contests()  
+       CodeforcesService().update_contests()
+       AtCoderService().update_contests()
+       HackerRankService().update_contests() 
+       TopCoderService().update_contests()      
+       HackerEarthService().update_contests()
+    #    AllServices().copy_data()
 
 
 

@@ -139,5 +139,4 @@ REST_FRAMEWORK = {
 
 CRON_CLASSES = [
     "api.clock.MyCronJob",
-    # ...
 ]
